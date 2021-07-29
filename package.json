@@ -41,5 +41,13 @@
   },
   "devDependencies": {
     "webpack-pwa-manifest": "^4.3.0"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "/mnt/e/BlockChainProject/client/.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
