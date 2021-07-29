@@ -7,7 +7,7 @@ const Project = () => {
 
   async function callAboutPage() {
     try {
-      const res = await fetch("/about", {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/about`, {
         method: "GET",
         headers: {
           Accept: "application/json",

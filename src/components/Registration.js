@@ -40,19 +40,22 @@ const Registration = () => {
       confirmpassword
     ) {
       if (password === confirmpassword) {
-        const res = await fetch("/registeration", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            firstname,
-            lastname,
-            email,
-            phone,
-            password,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/registeration`,
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              firstname,
+              lastname,
+              email,
+              phone,
+              password,
+            }),
+          }
+        );
 
         const data = await res.json();
 
