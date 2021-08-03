@@ -1,9 +1,116 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Project = () => {
   const history = useHistory();
   const [tokenName, settokenName] = useState();
   const [tokenAvailable, settokenAvailable] = useState("");
+const [page, setpage] = useState(false);
+const [data, setdata] = useState({
+  contractadress:"",
+requestername:"",
+requesteremailadress:"",
+projectname:"",
+officialprojectwebsite:"",
+officailprojectemailaddress:"",
+iconurl:"",
+projectsector:"",
+projectdescription:"",
+tokensavailable:"",
+whitepaper:"",
+telegram:"",
+discord:"",
+twitter:"",
+medium:"",
+coinmarketcap:"",
+coingecko:""
+});
+
+let name, value;
+  function handleinput(e) {
+    name = e.target.name;
+    value = e.target.value;
+    setdata((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+
+
+  async function postData(e) {
+    e.preventDefault();
+    
+let {  contractadress,requestername,requesteremailadress,projectname,officialprojectwebsite,officailprojectemailaddress,iconurl,projectsector,projectdescription,tokensavailable,whitepaper,telegram,
+discord,
+twitter,
+medium,
+coinmarketcap,
+coingecko}=data;
+
+console.log(data)
+
+    if (
+      contractadress &&
+      requestername &&
+      requesteremailadress &&
+      officialprojectwebsite &&
+      officailprojectemailaddress &&
+      iconurl &&
+      projectdescription &&
+      tokensavailable
+      ) 
+      
+      {
+      
+        const res = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/tokenform`,
+          {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+        credentials: "include",
+            body: JSON.stringify({
+              contractadress,requestername,requesteremailadress,projectname,officialprojectwebsite,officailprojectemailaddress,iconurl,projectsector,projectdescription,tokensavailable,whitepaper,telegram,
+              discord,
+              twitter,
+              medium,
+              coinmarketcap,
+              coingecko
+            }),
+          }
+        );
+
+        const dat = await res.json();
+
+        if (dat.stat === "wrong" || !dat) {
+          toast.error(dat.error);
+          console.log("Invalid Registration");
+        } else {
+          toast.success("Form Submitted successfull");
+          console.log("Registration Succesfull");
+         
+        }
+     
+    } 
+    else {
+      toast.error("Please fill  all the mandatory fields");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
 
   async function callAboutPage() {
     try {
@@ -22,6 +129,8 @@ const Project = () => {
       if (!(res.status === 200) || data.stat === "wrong") {
         throw new Error("Invalid Login");
       }
+
+      setpage(true);
     } catch (err) {
       console.log(err);
       history.push("/Login");
@@ -45,15 +154,27 @@ const Project = () => {
         }),
       });
 
-      const data = await res.json();
-      console.log(data);
+      const dat = await res.json();
+      console.log(dat);
 
-      if (!(res.status === 200) || data.stat === "wrong" || !data) {
+      if (!(res.status === 200) || dat.stat === "wrong" || !dat) {
         throw new Error("Invalid Login");
       }
 
-      settokenName(data.name);
-      settokenAvailable(data.tokens);
+      settokenName(dat.name);
+      settokenAvailable(dat.tokens);
+      
+      setdata((prev) => {
+        return {
+          ...prev,
+          tokensavailable: dat.tokens,
+        };
+      });
+
+
+    
+      
+
     } catch (err) {
       settokenName("Wrong Token Address");
       settokenAvailable("");
@@ -62,6 +183,8 @@ const Project = () => {
 
   return (
     <>
+
+     { page ?
       <div className="container-fluid formBack">
         <div className="row">
           <div className="mt-5 mb-5 col-md-8 col-10 mx-auto projectContainer">
@@ -71,8 +194,16 @@ const Project = () => {
             <form>
               <h3 className="typeOfData">Basic Information</h3>
 
-              <div class="mb-3">
-                <label for="TokenAddress" className="form-label">
+
+
+
+
+
+
+              
+
+              <div className="mb-3">
+                <label htmlFor="TokenAddress" className="form-label">
                   Token Contract Address*
                 </label>
                 <input
@@ -80,51 +211,61 @@ const Project = () => {
                   onBlur={getToken}
                   className="form-control"
                   id="TokenAddress"
-                />
+                  name="contractadress"
+               onChange={handleinput}
+               />
               </div>
 
-              <div class="mb-3">
-                <label for="RequesterName" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="RequesterName" className="form-label">
                   Requester Name*
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="RequesterName"
+                  name="requestername"
+                  onChange={handleinput}
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="RequesterEmail" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="RequesterEmail" className="form-label">
                   Requester Email Adress*
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="RequesterEmail"
+                  name="requesteremailadress"
+                  onChange={handleinput}
+
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="ProjectName" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="ProjectName" className="form-label">
                   Project Name
                 </label>
-                <input type="text" className="form-control" id="ProjectName" />
+                <input type="text" className="form-control" id="ProjectName" name="projectname"
+                onChange={handleinput}/>
               </div>
 
-              <div class="mb-3">
-                <label for="OfficialProjectWebsite" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="OfficialProjectWebsite" className="form-label">
                   Official Project Website*
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="OfficialProjectWebsite"
+                  name="officialprojectwebsite"
+                  onChange={handleinput}
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="OfficialProjectEmailAddress" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="OfficialProjectEmailAddress" className="form-label">
                   Official Project Email Address*
                 </label>
                 <input
@@ -132,6 +273,8 @@ const Project = () => {
                   className="form-control"
                   id="OfficialProjectEmailAddress"
                   aria-describedby="emailHelp"
+                  name="officailprojectemailaddress"
+                  onChange={handleinput}
                 />
                 <div id="emailHelp" className="form-text">
                   Please make sure the email provided has the project officail
@@ -139,31 +282,18 @@ const Project = () => {
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="logo" className="form-label">
-                  Choose a 32x32 png icon logo*
-                </label>
-                <div class="input-group mb-3">
-                  <input
-                    type="file"
-                    class="form-control"
-                    id="inputGroupFile02"
-                  />
-                  <label class="input-group-text" for="inputGroupFile02">
-                    Upload
-                  </label>
-                </div>
-              </div>
 
-              <div class="mb-3">
-                <label for="ProjectSector" className="form-label">
-                  Project Sector
+              <div className="mb-3">
+                <label htmlFor="ProjectSector" className="form-label">
+                  Paste a 32*32 image icon url
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="ProjectSector"
                   aria-describedby="emailHelp"
+                name="iconurl"
+                onChange={handleinput}
                 />
                 <div id="emailHelp" className="form-text">
                   Please soecify the industry/field that the project is a part
@@ -171,18 +301,43 @@ const Project = () => {
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="ProjectDescription" className="form-label">
+
+
+
+
+
+              <div className="mb-3">
+                <label htmlFor="ProjectSector" className="form-label">
+                  Project Sector
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="ProjectSector"
+                  aria-describedby="emailHelp"
+                  name="projectsector"
+                  onChange={handleinput}
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
                   Project Description (Max 300 characters)*
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="ProjectDescription"
+                  name="projectdescription"
+                  onChange={handleinput}
                 ></textarea>
               </div>
 
-              <div class="mb-3">
-                <label for="token" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
                   Token Name : {tokenName}
                 </label>
                 <input
@@ -192,98 +347,99 @@ const Project = () => {
                   className="form-control"
                   id="token"
                   aria-describedby="emailHelp"
+                  name="tokensavailable"
+                  
                 />
                 <div id="emailHelp" className="form-text">
                   Please soecify the industry/field that the project is a part
                   of
                 </div>
               </div>
-
+              <button type="button" className="btn btn-primary">
+                MetaMask Payment
+              </button>
               <h3 className="typeOfData">Social Profiles</h3>
 
-              <div class="mb-3">
-                <label for="whitepaper" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="whitepaper" className="form-label">
                   WhitePaper
                 </label>
-                <input type="text" className="form-control" id="whitepaper" />
+                <input type="text" className="form-control" id="whitepaper" name="whitepaper"
+                onChange={handleinput}/>
               </div>
 
-              <div class="mb-3">
-                <label for="telegram" className="form-label">
+              <div className="mb-3">
+                <label  htmlFor="telegram" className="form-label">
                   Telegram
                 </label>
-                <input type="text" className="form-control" id="telegram" />
+                <input name="telegram" type="text" className="form-control" id="telegram"
+                onChange={handleinput} />
               </div>
 
-              <div class="mb-3">
-                <label for="discord" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="discord" className="form-label">
                   Discord
                 </label>
-                <input type="text" className="form-control" id="discord" />
+                <input type="text" name='discord' className="form-control" id="discord" 
+                onChange={handleinput}/>
               </div>
 
-              <div class="mb-3">
-                <label for="twitter" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="twitter" className="form-label">
                   Twitter
                 </label>
-                <input type="text" className="form-control" id="twitter" />
+                <input type="text" name="twitter" className="form-control" id="twitter" 
+                onChange={handleinput}/>
               </div>
 
-              <div class="mb-3">
-                <label for="medium" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="medium" className="form-label">
                   Medium
                 </label>
-                <input type="text" className="form-control" id="medium" />
+                <input type="text" name="medium" className="form-control" id="medium" 
+                onChange={handleinput}/>
               </div>
 
               <h3 className="typeOfData">Price Data</h3>
 
-              <div class="mb-3">
-                <label for="coinmarketcap" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="coinmarketcap" className="form-label">
                   CoinMarketCap Ticker
                 </label>
                 <input
                   type="text"
                   className="form-control"
                   id="coinmarketcap"
+                  name="coinmarketcap"
+                  onChange={handleinput}
                 />
               </div>
 
-              <div class="mb-3">
-                <label for="coingecko" className="form-label">
+              <div className="mb-3">
+                <label htmlFor="coingecko" className="form-label">
                   CoinGecko Ticker
                 </label>
-                <input type="text" className="form-control" id="coingecko" />
+                <input type="text" className="form-control" id="coingecko" name="coingecko"
+                onChange={handleinput}/>
               </div>
-              {/* <div className="mb-3">
-                <label for="exampleInputPassword1" className="form-label">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="exampleInputPassword1"
-                />
-              </div>
-              <div className="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="exampleCheck1"
-                />
-                <label className="form-check-label" for="exampleCheck1">
-                  Check me out
-                </label>
-              </div> */}
-              <button type="submit" className="btn btn-primary">
+              
+              <button  onClick={postData} type="submit" className="btn btn-primary"> */}
                 Submit
               </button>
+
+
+
+
             </form>
           </div>
         </div>
-      </div>
+        <ToastContainer position="top-center"></ToastContainer>
+      </div>:<h1>Loading...</h1>}
+
     </>
-  );
+ 
+ 
+ );
 };
 
 export default Project;

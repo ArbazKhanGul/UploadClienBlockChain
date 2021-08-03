@@ -11,12 +11,15 @@ const Login = () => {
   async function loginUser(e) {
     e.preventDefault();
 
+    
     if (email && password) {
       const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          Accept: "application/json",
+          "Content-type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
           email,
           password,
@@ -36,24 +39,26 @@ const Login = () => {
     }
   }
   return (
+
     <>
+    
       <div className="container1">
         <div className="row">
           <div className="col-left OnlyLogin">
             <div className="buttons">
-              <div class="btn">
-                <div class="moverbtn"></div>
+              <div className="btn">
+                <div className="moverbtn"></div>
 
-                <button class="sigup" id="signup">
+                <button className="sigup" id="signup">
                   LogIn
                 </button>
               </div>
             </div>
-            <form action="/login" class="login" method="POST">
-              <div class="heading">
+            <form action="/login" className="login" method="POST">
+              <div className="heading">
                 <h3>LogIn form</h3>
               </div>
-              <div class="form-group1">
+              <div className="form-group1">
                 <input
                   type="email"
                   placeholder="Enter Your email*"
@@ -61,7 +66,7 @@ const Login = () => {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  class="form-control"
+                  className="form-control"
                   name="email"
                   id="email2"
                 />
@@ -73,16 +78,16 @@ const Login = () => {
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
-                  class="form-control"
+                  className="form-control"
                   id="password2"
                 />
               </div>
 
-              <div class="buttons">
+              <div className="buttons">
                 <button
                   type="submit"
                   onClick={loginUser}
-                  class="submit submitLogin"
+                  className="submit submitLogin"
                 >
                   Login
                 </button>

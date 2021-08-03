@@ -14,6 +14,7 @@ const Registration = () => {
     password: "",
     confirmpassword: "",
   });
+
   let name, value;
   function handleinput(e) {
     name = e.target.name;
@@ -74,22 +75,25 @@ const Registration = () => {
       toast.error("Please fill  all the fields");
     }
   }
+
+  
   return (
     <>
+    
       <div className="container1">
         <div className="row">
           <div className="col-left">
-            <div class="buttons">
-              <div class="btn">
-                <div class="moverbtn"></div>
+            <div className="buttons">
+              <div className="btn">
+                <div className="moverbtn"></div>
 
-                <button class="sigup" id="signup">
+                <button className="sigup" id="signup">
                   SignUp
                 </button>
               </div>
             </div>
 
-            <form method="POST" class="logup">
+            <form method="POST" className="logup">
               <div className="heading">
                 <h3>Registration Form</h3>
               </div>
@@ -97,7 +101,7 @@ const Registration = () => {
                 <input
                   type="text"
                   className="form-control"
-                  autocomplete="off"
+                  autoComplete="off"
                   placeholder="First Name*"
                   value={user.firstname}
                   onChange={handleinput}
@@ -108,8 +112,8 @@ const Registration = () => {
                 <input
                   type="text"
                   placeholder="Last Name*"
-                  autocomplete="off"
-                  class="form-control"
+                  autoComplete="off"
+                  className="form-control"
                   value={user.lastname}
                   onChange={handleinput}
                   name="lastname"
@@ -122,7 +126,7 @@ const Registration = () => {
                 <input
                   type="email"
                   placeholder="Enter your email*"
-                  autocomplete="off"
+                  autoComplete="off"
                   className="form-control"
                   value={user.email}
                   onChange={handleinput}
@@ -132,7 +136,7 @@ const Registration = () => {
                 />
                 <input
                   type="tel"
-                  autocomplete="off"
+                  autoComplete="off"
                   placeholder="Your Phone*"
                   value={user.phone}
                   onChange={handleinput}
