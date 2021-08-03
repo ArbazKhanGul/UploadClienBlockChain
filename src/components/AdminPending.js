@@ -1,5 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminPending = () => {
 const history =useHistory();
@@ -51,6 +53,51 @@ console.log(allUSersData)
       callAboutPage();
     }, []);
   
+
+// Accept
+// reject
+
+
+async function action(formid,behaviour){
+
+  try{
+  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/action`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      formid,
+      behaviour
+    }),
+  });
+  
+  const dat = await res.json();
+  console.log(dat);
+
+  if (dat.stat === "wrong") {
+       throw new Error("Invalid Login");
+}
+if(dat.stat==="empty"){
+  toast.warn("Error Coming in performing action on form");
+}
+else{
+  toast.success(dat.message);
+  setallUSersData(dat.responsePending)
+}
+
+}
+catch(err){
+  console.log(err);
+  history.push("/Login");
+  
+}
+
+}
+
+
     return (
     
         <>
@@ -137,13 +184,15 @@ console.log(allUSersData)
   
 </table> 
 
-<button type="button" className="btn btn-primary mr-3" style={{display:"inline-block",marginLeft:"5px"}}>Accept</button>
-  <button type="button" className="btn btn-danger" style={{display:"inline-block",marginLeft:"20px"}}>Reject</button>
+<button type="button" onClick={()=>{action(temp._id,"accept")}} className="btn btn-primary mr-3" style={{display:"inline-block",marginLeft:"5px"}}>Accept</button>
+  <button type="button" onClick={()=>{action(temp._id,"reject")}} className="btn btn-danger" style={{display:"inline-block",marginLeft:"20px"}}>Reject</button>
   </div>
 )
 
 })} 
 </>:<h1>Loading....</h1>}
+
+<ToastContainer position="top-center"></ToastContainer>
         </>
     );
 }
