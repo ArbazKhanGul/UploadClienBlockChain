@@ -201,8 +201,8 @@
   color: blue !important;
 }
 .navbar {
-  /* box-sizing: border-box; */
-  /* height: 9vh !important; */
+  box-sizing: border-box;
+  height: 9vh !important;
 }
 .homeDiv {
   overflow: hidden;
