@@ -123,7 +123,7 @@ catch(err){
     <tr>
     <td>{temp.contractadress}</td>
       <td>{temp.requestername}</td>
-      <td>{temp.requestemailaddress}</td> 
+      <td>{temp.requesteremailadress}</td> 
       <td>{temp.projectname}</td> 
     </tr>
   </tbody>

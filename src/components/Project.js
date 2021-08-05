@@ -55,13 +55,22 @@ console.log(data)
 
     if (
       contractadress &&
-      requestername &&
+       requestername && 
       requesteremailadress &&
+      projectname &&
       officialprojectwebsite &&
       officailprojectemailaddress &&
       iconurl &&
+      projectsector &&
       projectdescription &&
-      tokensavailable
+      tokensavailable &&
+      whitepaper &&
+      telegram &&
+      discord &&
+      twitter &&
+      medium &&
+      coinmarketcap &&
+      coingecko
       ) 
       
       {
@@ -93,12 +102,29 @@ console.log(data)
         } else {
           toast.success("Form Submitted successfull");
           console.log("Registration Succesfull");
-         
+         setdata({contractadress:"",
+         requestername:"",
+         requesteremailadress:"",
+         projectname:"",
+         officialprojectwebsite:"",
+         officailprojectemailaddress:"",
+         iconurl:"",
+         projectsector:"",
+         projectdescription:"",
+         tokensavailable:"",
+         whitepaper:"",
+         telegram:"",
+         discord:"",
+         twitter:"",
+         medium:"",
+         coinmarketcap:"",
+         coingecko:""
+         })
         }
      
     } 
     else {
-      toast.error("Please fill  all the mandatory fields");
+      toast.error("Please fill  all the  fields");
     }
   }
 
@@ -212,7 +238,8 @@ console.log(data)
                   className="form-control"
                   id="TokenAddress"
                   name="contractadress"
-               onChange={handleinput}
+               value={data.contractadress}
+                  onChange={handleinput}
                />
               </div>
 
@@ -225,6 +252,7 @@ console.log(data)
                   className="form-control"
                   id="RequesterName"
                   name="requestername"
+                  value={data.requestername}
                   onChange={handleinput}
                 />
               </div>
@@ -238,6 +266,7 @@ console.log(data)
                   className="form-control"
                   id="RequesterEmail"
                   name="requesteremailadress"
+                  value={data.requesteremailadress}
                   onChange={handleinput}
 
                 />
@@ -247,7 +276,7 @@ console.log(data)
                 <label htmlFor="ProjectName" className="form-label">
                   Project Name
                 </label>
-                <input type="text" className="form-control" id="ProjectName" name="projectname"
+                <input type="text" className="form-control" id="ProjectName" name="projectname" value={data.projectname}
                 onChange={handleinput}/>
               </div>
 
@@ -260,6 +289,7 @@ console.log(data)
                   className="form-control"
                   id="OfficialProjectWebsite"
                   name="officialprojectwebsite"
+                  value={data.officialprojectwebsite}
                   onChange={handleinput}
                 />
               </div>
@@ -274,6 +304,7 @@ console.log(data)
                   id="OfficialProjectEmailAddress"
                   aria-describedby="emailHelp"
                   name="officailprojectemailaddress"
+                  value={data.officailprojectemailaddress}
                   onChange={handleinput}
                 />
                 <div id="emailHelp" className="form-text">
@@ -293,6 +324,7 @@ console.log(data)
                   id="ProjectSector"
                   aria-describedby="emailHelp"
                 name="iconurl"
+                value={data.iconurl}
                 onChange={handleinput}
                 />
                 <div id="emailHelp" className="form-text">
@@ -316,6 +348,7 @@ console.log(data)
                   id="ProjectSector"
                   aria-describedby="emailHelp"
                   name="projectsector"
+                  value={data.projectsector}
                   onChange={handleinput}
                 />
                 <div id="emailHelp" className="form-text">
@@ -333,6 +366,7 @@ console.log(data)
                   id="ProjectDescription"
                   name="projectdescription"
                   onChange={handleinput}
+                  value={data.projectdescription}
                 ></textarea>
               </div>
 
@@ -355,9 +389,9 @@ console.log(data)
                   of
                 </div>
               </div>
-              <button type="button" className="btn btn-primary">
+              {/* <button type="button" className="btn btn-primary">
                 MetaMask Payment
-              </button>
+              </button> */}
               <h3 className="typeOfData">Social Profiles</h3>
 
               <div className="mb-3">
@@ -365,7 +399,7 @@ console.log(data)
                   WhitePaper
                 </label>
                 <input type="text" className="form-control" id="whitepaper" name="whitepaper"
-                onChange={handleinput}/>
+                onChange={handleinput} value={data.whitepaper}/>
               </div>
 
               <div className="mb-3">
@@ -373,7 +407,7 @@ console.log(data)
                   Telegram
                 </label>
                 <input name="telegram" type="text" className="form-control" id="telegram"
-                onChange={handleinput} />
+                onChange={handleinput} value={data.telegram}/>
               </div>
 
               <div className="mb-3">
@@ -381,7 +415,7 @@ console.log(data)
                   Discord
                 </label>
                 <input type="text" name='discord' className="form-control" id="discord" 
-                onChange={handleinput}/>
+                onChange={handleinput} value={data.discord}/>
               </div>
 
               <div className="mb-3">
@@ -389,7 +423,7 @@ console.log(data)
                   Twitter
                 </label>
                 <input type="text" name="twitter" className="form-control" id="twitter" 
-                onChange={handleinput}/>
+                onChange={handleinput} value={data.twitter}/>
               </div>
 
               <div className="mb-3">
@@ -397,7 +431,7 @@ console.log(data)
                   Medium
                 </label>
                 <input type="text" name="medium" className="form-control" id="medium" 
-                onChange={handleinput}/>
+                onChange={handleinput} value={data.medium}/>
               </div>
 
               <h3 className="typeOfData">Price Data</h3>
@@ -411,6 +445,7 @@ console.log(data)
                   className="form-control"
                   id="coinmarketcap"
                   name="coinmarketcap"
+                  value={data.coinmarketcap}
                   onChange={handleinput}
                 />
               </div>
@@ -420,10 +455,10 @@ console.log(data)
                   CoinGecko Ticker
                 </label>
                 <input type="text" className="form-control" id="coingecko" name="coingecko"
-                onChange={handleinput}/>
+                onChange={handleinput} value={data.coingecko}/>
               </div>
               
-              <button  onClick={postData} type="submit" className="btn btn-primary"> */}
+              <button  onClick={postData} type="submit" className="btn btn-primary"> 
                 Submit
               </button>
 
