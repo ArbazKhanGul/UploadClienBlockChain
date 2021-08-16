@@ -305,7 +305,7 @@ console.log(tokensPercent);
       if (!(res.status === 200) || data.stat === "wrong") {
         throw new Error("Invalid Login");
       }
-
+      beforeverify();
       setpage(true);
     } catch (err) {
       console.log(err);
@@ -315,7 +315,7 @@ console.log(tokensPercent);
 
   useEffect(() => {
     callAboutPage();
-    beforeverify();
+
   }, []);
 
 
@@ -409,7 +409,7 @@ console.log(hash)
   async function getToken(e) {
     let tokenInputVal = e.target.value;
     try {
-      const res = await fetch("/token", {
+      const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
