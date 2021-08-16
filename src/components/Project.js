@@ -27,6 +27,11 @@ const [numberlimit, setnumberlimit] = useState({
   max:""
 })
 
+function checkBalance(){
+  if(numberlimit.max<numberlimit.min){
+    toast.error("You have insufficient balance")
+  }
+}
 
 function numberChange(event){
 
@@ -323,6 +328,7 @@ console.log(tokensPercent);
 
 async function transaction(){
 
+  
 // let tokensPercent=parseInt(tokenAvailable/10);
 
   // console.log(tokensPercent);
@@ -644,7 +650,7 @@ console.log(hash)
 <br />
 <br />
 
-              <button type="button" className="btn btn-primary" disabled={checkmetamask?null:"disabled"} onClick={beforeverify} data-bs-toggle={percentCheck?"":"modal"} data-bs-target="#exampleModal">
+              <button type="button" className="btn btn-primary" disabled={checkmetamask?null:"disabled"} onClick={checkBalance} data-bs-toggle={percentCheck?"":"modal"} data-bs-target="#exampleModal">
   Send Tokens
 </button> 
 {checkmetamask?<div id="emailHelp" style={{display:"inline-block",color : "green",marginLeft:"10px"}}className="form-text">
