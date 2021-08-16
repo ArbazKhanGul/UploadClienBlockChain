@@ -7,7 +7,7 @@ const [page, setpage] = useState(false);
 const [formDataServer, setformDataServer] = useState([])
 async function callAboutPage(){
     try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/adminaccept`, {
+        const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/client`, {
           method: "GET",
           headers: {
             Accept: "application/json",
@@ -23,9 +23,7 @@ async function callAboutPage(){
         if (data.stat === "wrong") {
             throw new Error("Invalid Login");
         }
-        if (!(res.status === 200) || data.stat === "notadmin") {
-            history.push("/");  
-        }
+        
         const storetemp=data.formaccepted;
         console.log(storetemp)
         setformDataServer(storetemp);
@@ -130,6 +128,7 @@ async function callAboutPage(){
   
   
 </table> 
+<h2>Status  :  <span>{temp.status}</span></h2>
 
   </div>
 )

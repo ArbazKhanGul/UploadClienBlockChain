@@ -141,7 +141,7 @@ catch(err){
     <td>{temp.iconurl}</td>
       <td>{temp.projectsector}</td>
       <td>{temp.tokensavailable}</td> 
-      <td>Not set yet</td> 
+      <td><a style={{textDecoration:"none"}} target="_blank" href={`https://testnet.bscscan.com/tx/${temp.hash}`}>Click to see payment</a></td> 
     </tr>
   </tbody>
 

@@ -2,11 +2,79 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Web3 from 'web3';
+import ABI from "./ABI.json";
+import supply from "./supply.json"
+
 const Project = () => {
+
+ 
+
+
+
+const [hash, sethash] = useState("");
+
+
+
+
+
+const [numberInput, setnumberInput] = useState("");
+const [percentCheck, setpercentCheck] = useState(true)
+const [receiverAddress, setreceiverAddress] = useState("")
+
+const [numberlimit, setnumberlimit] = useState({
+  min:"",
+  max:""
+})
+
+
+function numberChange(event){
+
+setnumberInput(event.target.value);
+
+}
+
+const beforeverify=async ()=>{
+               
+try {
+  const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/getreceiveraddress`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+
+  const data = await res.json();
+  console.log(data)
+
+  if (data.stat === "wrong") {
+      throw new Error("Invalid Login");
+  }
+  if(data.receive=="error"){
+    throw new Error("Server error");
+  }
+
+
+setreceiverAddress(data.receive);
+
+} catch (err) {
+    console.log(err)
+  toast.error("Some error occurring in getting Receiver Address please try later")
+    
+}
+
+  }
+
+
   const history = useHistory();
   const [tokenName, settokenName] = useState();
   const [tokenAvailable, settokenAvailable] = useState("");
 const [page, setpage] = useState(false);
+const [checkmetamask, setcheckmetamask] = useState(false);
+
 const [data, setdata] = useState({
   contractadress:"",
 requestername:"",
@@ -24,7 +92,8 @@ discord:"",
 twitter:"",
 medium:"",
 coinmarketcap:"",
-coingecko:""
+coingecko:"",
+hash:""
 });
 
 let name, value;
@@ -49,7 +118,9 @@ discord,
 twitter,
 medium,
 coinmarketcap,
-coingecko}=data;
+coingecko,
+
+}=data;
 
 console.log(data)
 
@@ -70,7 +141,7 @@ console.log(data)
       twitter &&
       medium &&
       coinmarketcap &&
-      coingecko
+      coingecko && hash
       ) 
       
       {
@@ -89,7 +160,8 @@ console.log(data)
               twitter,
               medium,
               coinmarketcap,
-              coingecko
+              coingecko,
+              hash
             }),
           }
         );
@@ -131,9 +203,87 @@ console.log(data)
 
 
 
+// metamask payment option
+var accounts;
+let web3;
+
+async function getAccount() {
+  
+  let address;
+
+  // console.log(receiverAddress);
+    if (window.ethereum) { //check if Metamask is installed
+
+      web3=new Web3(window.ethereum);
+
+      try {
+              await window.ethereum.enable(); //connect Metamask
+                            
+              
+              toast.success("MetaMask Connected");
+
+           
+          } catch (error) {
+
+            toast.error("🦊 Error coming in connecting your metamask Please check your metamask")
+        return;
+            
+          }
+          
+    } else {
+      toast.error("🦊 You must install Metamask into your browser: https://metamask.io/download.html");
+   return;     
+        } 
 
 
+        try{
 
+        
+          accounts=await web3.eth.getAccounts();
+          console.log(accounts[0]);
+        
+          const tokenInst = new web3.eth.Contract(ABI, data.contractadress);
+          const balance = await tokenInst.methods.balanceOf(`${accounts[0]}`).call()  
+        
+         
+
+          let temp = web3.utils.fromWei(balance, "ether");
+          
+          // console.log("I am printing token vlaue"+temp);
+
+          let temp2=parseInt(temp);
+          // console.log(temp2)
+    // console.log(tokenAvailable);
+          
+          let tokensPercent=parseInt(tokenAvailable/10);
+// let tokensPercent=100;
+      // console.log(tokensPercent);
+      console.log(temp)
+console.log(temp2);
+console.log(tokenAvailable)
+console.log(tokensPercent);
+
+     if(temp2>tokensPercent){
+       console.log("Imside token percent")
+      console.log("IT is greater ");
+      setpercentCheck(false);
+      }
+
+      setnumberlimit(
+       ()=>{return {
+        min:tokensPercent ,
+        max:temp2,
+       }}
+       )
+
+       setcheckmetamask(true);
+    }
+    catch(err){
+      setcheckmetamask(true);
+          console.log(err)
+        }
+
+  };
 
 
 
@@ -165,7 +315,96 @@ console.log(data)
 
   useEffect(() => {
     callAboutPage();
+    beforeverify();
   }, []);
+
+
+// Transaction
+
+async function transaction(){
+
+// let tokensPercent=parseInt(tokenAvailable/10);
+
+  // console.log(tokensPercent);
+  // const tokenInst = new web3.eth.Contract(supply, data.contractadress);
+  
+  // 0xe39e98a1cdf3e6c337c6fd23fb943934989903bb
+ const web3=new Web3(window.ethereum);
+ accounts=await web3.eth.getAccounts();
+ 
+ var contract = new web3.eth.Contract(supply, `${data.contractadress}`, { from: `${accounts[0]}` });
+
+  let decimals = web3.utils.toBN(18);
+  
+  let amount = web3.utils.toBN(numberInput);
+  
+  var count =await  web3.eth.getTransactionCount(`${accounts[0]}`);
+  
+  let value = amount.mul(web3.utils.toBN(10).pow(decimals));
+
+  // console.log(value);
+// console.log(Math.round(199999/10))
+
+let gasLimit=await web3.eth.estimateGas({
+  "from": `${accounts[0]}`,
+    "nonce":  "0x" + count.toString(16),
+    "to": `${data.contractadress}`,
+    "data": contract.methods.transfer(`${receiverAddress}`,value).encodeABI(),
+})
+console.log(gasLimit);
+  var rawTransaction = {
+    "from": `${accounts[0]}`,
+    "nonce":  "0x" + count.toString(16),
+    "gasPrice": "0x00000002540BE400",
+    "gasLimit":gasLimit,
+    // "gasLimit": "0x0000D49A",
+    "to": `${data.contractadress}`,
+    "value": "0x0",
+    "data": contract.methods.transfer(`${receiverAddress}`,value).encodeABI(),
+    "chainId": 97
+};
+ 
+ try{
+   console.log("Sending")
+let has=await web3.eth.sendTransaction(rawTransaction)
+toast.success("Payment send successfully")
+console.log(has);
+sethash(has.transactionHash)
+console.log(hash)
+ }
+ catch(error){
+
+  console.log(error)
+ };
+
+// {
+  //   {
+  //   // method: 'eth_sendTransaction',
+  //   // params: [
+  //     // {
+  //       from:  "0x20E07E16528fD679BCDA2eC62dE22Cb381B7408F",
+  //       to: "0x3905ed8B71F4702F7adB5aeFd86c7Ae9fB750EC7",
+  //       value: '0x29a2241af62c0000',
+  //       gasPrice: '0x09184e72a000',
+  //       gas: '0x2710',
+  //       data: tokenInst.methods.transfer("0x3905ed8B71F4702F7adB5aeFd86c7Ae9fB750EC7",  {from: "0x20E07E16528fD679BCDA2eC62dE22Cb381B7408F"}),
+  //       chainId: 56
+  //     // },
+    // ],
+  // }
+  
+  // // )
+  // .then((txHash) => console.log(txHash)
+  
+}
+
+
+
+
+
+
+
+
 
   async function getToken(e) {
     let tokenInputVal = e.target.value;
@@ -307,6 +546,7 @@ console.log(data)
                   value={data.officailprojectemailaddress}
                   onChange={handleinput}
                 />
+                
                 <div id="emailHelp" className="form-text">
                   Please make sure the email provided has the project officail
                   domain as its prefix
@@ -389,9 +629,80 @@ console.log(data)
                   of
                 </div>
               </div>
-              {/* <button type="button" className="btn btn-primary">
-                MetaMask Payment
-              </button> */}
+
+
+              <button   onClick={getAccount} disabled={tokenAvailable?null:"disabled"}   type="button" className="btn btn-primary">
+               Connect MetaMask 
+              </button>
+           {tokenAvailable?<div id="emailHelp" style={{display:"inline-block",color : "green",marginLeft:"10px"}}className="form-text">
+                  True contract address entered condition satified 
+                </div>:
+              <div id="emailHelp" style={{display:"inline-block",color : "red",marginLeft:"10px"}}className="form-text">
+                  Please first write your true contract address in start field
+                </div>
+}
+<br />
+<br />
+
+              <button type="button" className="btn btn-primary" disabled={checkmetamask?null:"disabled"} onClick={beforeverify} data-bs-toggle={percentCheck?"":"modal"} data-bs-target="#exampleModal">
+  Send Tokens
+</button> 
+{checkmetamask?<div id="emailHelp" style={{display:"inline-block",color : "green",marginLeft:"10px"}}className="form-text">
+                  Metamask connected condition satified
+                </div>:
+              <div id="emailHelp" style={{display:"inline-block",color : "red",marginLeft:"10px"}}className="form-text">
+                  Please first connect to metamask
+                </div>
+}
+<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h5 className="modal-title" id="exampleModalLabel">Meta Mask Payment</h5>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="modal-body">
+      <div className="mb-3">
+                <label htmlFor="ProjectSector" className="form-label">
+                  Enter the amount you want to pay
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="tokenamount"
+                  aria-describedby="emailHelp"
+                  name="tokenamount"
+                  value={numberInput}
+                  onChange={numberChange}
+                  // onBlur={checkNumberLimit}
+          // min={numberlimit.min}
+          // max={numberlimit.max}                          
+                />
+              </div>
+              <div>
+        Minimum Allowed :    {numberlimit.min}  <br />
+        Maximum Allowed : {numberlimit.max} 
+      </div>
+      </div>
+    
+      <div className="modal-footer fot">
+        <p>Total coins : {tokenAvailable}</p>
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" disabled={numberInput>=numberlimit.min && numberInput <=numberlimit.max?null:"disabled"} className="btn btn-primary" onClick={transaction}>Send Money</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{
+  hash?
+<div className="mb-3 mt-3">
+                <label htmlFor="payment" className="form-label">
+                 <h4> Check Your Payment</h4>
+                </label>
+<div> <a href={`https://testnet.bscscan.com/tx/${hash}`} target="_blank">{`https://testnet.bscscan.com/tx/${hash}`}</a> </div>
+              </div>:""
+}
               <h3 className="typeOfData">Social Profiles</h3>
 
               <div className="mb-3">

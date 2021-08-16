@@ -9,6 +9,9 @@ import ErrorPage from './components/ErrorPage'
 import AdminAccept from './components/AdminAccept'
 import AdminPending from './components/AdminPending'
 import RegisteredUsers from "./components/RegisteredUsers";
+import ClientViewing from "./components/ClientViewing"
+import detail from './components/detail'
+import ReceiverAddress from './components/ReceiverAddress'
 function App() {
   return (
    <>
@@ -23,6 +26,9 @@ function App() {
    <Route path="/adminaccept" component={AdminAccept}></Route>
    <Route path="/adminpending" component={AdminPending}></Route>
    <Route path="/registeredusers" component={RegisteredUsers}></Route>
+   <Route path="/clientviewing" component={ClientViewing}></Route>
+   <Route path="/receiveraddress" component={ReceiverAddress}></Route>
+   <Route path="/detail/:detailtype" component={detail}></Route>
    <Route component={ErrorPage}></Route>
    </Switch>
 </>
