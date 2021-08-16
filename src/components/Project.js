@@ -19,18 +19,73 @@ const [hash, sethash] = useState("");
 
 
 const [numberInput, setnumberInput] = useState("");
-const [percentCheck, setpercentCheck] = useState(true)
+const [percentCheck, setpercentCheck] = useState(false)
 const [receiverAddress, setreceiverAddress] = useState("")
+
+const [checkTokens, setcheckTokens] = useState("Check Tokens")
 
 const [numberlimit, setnumberlimit] = useState({
   min:"",
   max:""
 })
 
-function checkBalance(){
-  if(numberlimit.max<numberlimit.min){
+async  function  checkBalance(){
+  try{
+
+web3=new Web3(window.ethereum);        
+    accounts=await web3.eth.getAccounts();
+    console.log(accounts[0]);
+  
+    const tokenInst = new web3.eth.Contract(ABI, data.contractadress);
+    const balance = await tokenInst.methods.balanceOf(`${accounts[0]}`).call()  
+  
+   
+
+    let temp = web3.utils.fromWei(balance, "ether");
+    
+    // console.log("I am printing token vlaue"+temp);
+
+    let temp2=parseInt(temp);
+    // console.log(temp2)
+// console.log(tokenAvailable);
+    
+    let tokensPercent=parseInt(tokenAvailable/10);
+// let tokensPercent=100;
+// console.log(tokensPercent);
+if(temp2>tokensPercent){
+  setpercentCheck(true);
+    toast.success("You have sufficient tokens now press send tokens");
+}
+console.log(temp)
+console.log(temp2);
+console.log(tokenAvailable)
+console.log(tokensPercent);
+
+
+
+if(temp2<tokensPercent){
+  setpercentCheck(false);
+  toast.error("You have insufficient balance")
+  return
+}
+
+setnumberlimit(
+ ()=>{return {
+  min:tokensPercent ,
+  max:temp2,
+ }}
+ )
+
+ 
+
+}
+catch(err){
+
+    console.log(err)
     toast.error("You have insufficient balance")
   }
+
+
 }
 
 function numberChange(event){
@@ -103,6 +158,7 @@ hash:""
 
 let name, value;
   function handleinput(e) {
+    setpercentCheck(false);
     name = e.target.name;
     value = e.target.value;
     setdata((prev) => {
@@ -226,7 +282,7 @@ async function getAccount() {
                             
               
               toast.success("MetaMask Connected");
-
+              setcheckmetamask(true);
            
           } catch (error) {
 
@@ -241,53 +297,7 @@ async function getAccount() {
         } 
 
 
-        try{
-
         
-          accounts=await web3.eth.getAccounts();
-          console.log(accounts[0]);
-        
-          const tokenInst = new web3.eth.Contract(ABI, data.contractadress);
-          const balance = await tokenInst.methods.balanceOf(`${accounts[0]}`).call()  
-        
-         
-
-          let temp = web3.utils.fromWei(balance, "ether");
-          
-          // console.log("I am printing token vlaue"+temp);
-
-          let temp2=parseInt(temp);
-          // console.log(temp2)
-    // console.log(tokenAvailable);
-          
-          let tokensPercent=parseInt(tokenAvailable/10);
-// let tokensPercent=100;
-      // console.log(tokensPercent);
-      console.log(temp)
-console.log(temp2);
-console.log(tokenAvailable)
-console.log(tokensPercent);
-
-     if(temp2>tokensPercent){
-       console.log("Imside token percent")
-      console.log("IT is greater ");
-      setpercentCheck(false);
-      }
-
-      setnumberlimit(
-       ()=>{return {
-        min:tokensPercent ,
-        max:temp2,
-       }}
-       )
-
-       setcheckmetamask(true);
-    }
-    catch(err){
-      setcheckmetamask(true);
-          console.log(err)
-        }
-
   };
 
 
@@ -650,16 +660,17 @@ console.log(hash)
 <br />
 <br />
 
-              <button type="button" className="btn btn-primary" disabled={checkmetamask?null:"disabled"} onClick={checkBalance} data-bs-toggle={percentCheck?"":"modal"} data-bs-target="#exampleModal">
+<button type="button" onClick={checkBalance} className="btn btn-primary" disabled={checkmetamask?null:"disabled"}>
+  Verify Tokens
+</button> 
+
+
+              <button type="button"  className="btn btn-primary" style={{marginLeft:"10px"}} disabled={checkmetamask && percentCheck ?null:"disabled"}  data-bs-toggle="modal" data-bs-target="#exampleModal">
   Send Tokens
 </button> 
-{checkmetamask?<div id="emailHelp" style={{display:"inline-block",color : "green",marginLeft:"10px"}}className="form-text">
-                  Metamask connected condition satified
-                </div>:
-              <div id="emailHelp" style={{display:"inline-block",color : "red",marginLeft:"10px"}}className="form-text">
-                  Please first connect to metamask
+<div id="emailHelp" style={{display:"inline-block",color : "black",marginLeft:"10px"}}className="form-text">
+                  Please first verify the tokens then send token button enable automatically
                 </div>
-}
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered">
     <div className="modal-content">
