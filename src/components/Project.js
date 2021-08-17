@@ -254,6 +254,8 @@ console.log(data)
          coingecko:""
          })
          sethash("");
+        settokenAvailable("");
+        settokenName("");
         }
      
     } 
@@ -487,7 +489,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="TokenAddress" className="form-label">
-                  Token Contract Address*
+                  Token Contract Address
                 </label>
                 <input
                   type="text"
@@ -502,7 +504,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="RequesterName" className="form-label">
-                  Requester Name*
+                  Requester Name
                 </label>
                 <input
                   type="text"
@@ -516,7 +518,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="RequesterEmail" className="form-label">
-                  Requester Email Adress*
+                  Requester Email Adress
                 </label>
                 <input
                   type="text"
@@ -539,7 +541,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="OfficialProjectWebsite" className="form-label">
-                  Official Project Website*
+                  Official Project Website
                 </label>
                 <input
                   type="text"
@@ -553,7 +555,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="OfficialProjectEmailAddress" className="form-label">
-                  Official Project Email Address*
+                  Official Project Email Address
                 </label>
                 <input
                   type="text"
@@ -617,7 +619,7 @@ console.log(hash)
 
               <div className="mb-3">
                 <label htmlFor="ProjectDescription" className="form-label">
-                  Project Description (Max 300 characters)*
+                  Project Description (Max 300 characters)
                 </label>
                 <textarea
                   className="form-control"
