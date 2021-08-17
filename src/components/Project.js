@@ -386,14 +386,14 @@ console.log(gasLimit);
  try{
    console.log("Sending")
 let has=await web3.eth.sendTransaction(rawTransaction)
-toast.success("Payment send successfully")
+toast.success("Tokens send successfully")
 console.log(has);
 sethash(has.transactionHash)
 setnumberInput("");
 console.log(hash)
  }
  catch(error){
-
+toast.error("Error comming in sending tokens")
   console.log(error)
  };
 
