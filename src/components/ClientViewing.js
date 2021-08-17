@@ -47,7 +47,7 @@ async function callAboutPage(){
     return (
         <>
        {page?<>
-         <h2 className="text-center mt-2">Token Forms Accepted</h2>  
+         <h2 className="text-center mt-2">Submitted Form Status</h2>  
 
 {formDataServer.map((temp,index)=>{  
   return(

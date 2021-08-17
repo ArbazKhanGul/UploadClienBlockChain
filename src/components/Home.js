@@ -57,7 +57,7 @@ history.push(`/detail/${temp}`)
     <h4 className="card-title">Project Name</h4>
     <h6 className="card-subtitle mb-2 text-muted mt-2">{temp.projectname}</h6>
     <h4 className="card-title">Project Description</h4>
-    <p className="card-text pcard">{temp.projectdescription} Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, praesentium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis dolorum sed accusamus velit dolores porro eum incidunt assumenda voluptates fuga.</p>
+    <p className="card-text pcard">{temp.projectdescription}</p>
   
 <button className='btn btn-primary buttondet' onClick={()=>{
   sendid(temp._id);

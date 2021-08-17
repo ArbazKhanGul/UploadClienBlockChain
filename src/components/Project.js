@@ -253,6 +253,7 @@ console.log(data)
          coinmarketcap:"",
          coingecko:""
          })
+         sethash("");
         }
      
     } 
@@ -350,12 +351,12 @@ async function transaction(){
  
  var contract = new web3.eth.Contract(supply, `${data.contractadress}`, { from: `${accounts[0]}` });
 
-  let decimals = web3.utils.toBN(18);
-  
-  let amount = web3.utils.toBN(numberInput);
+
   
   var count =await  web3.eth.getTransactionCount(`${accounts[0]}`);
-  
+
+  let decimals = web3.utils.toBN(18);
+  let amount = web3.utils.toBN(numberInput);
   let value = amount.mul(web3.utils.toBN(10).pow(decimals));
 
   // console.log(value);
@@ -386,6 +387,7 @@ let has=await web3.eth.sendTransaction(rawTransaction)
 toast.success("Payment send successfully")
 console.log(has);
 sethash(has.transactionHash)
+setnumberInput("");
 console.log(hash)
  }
  catch(error){
@@ -676,7 +678,7 @@ console.log(hash)
     <div className="modal-content">
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">Meta Mask Payment</h5>
-        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
       </div>
       <div className="modal-body">
       <div className="mb-3">
@@ -704,7 +706,7 @@ console.log(hash)
     
       <div className="modal-footer fot">
         <p>Total coins : {tokenAvailable}</p>
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>{setnumberInput("")}}>Close</button>
         <button type="button" disabled={numberInput>=numberlimit.min && numberInput <=numberlimit.max?null:"disabled"} className="btn btn-primary" onClick={transaction}>Send Money</button>
       </div>
     </div>
