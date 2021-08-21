@@ -2,10 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {useHistory} from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Web3 from 'web3';
-import axios from "axios";
-import Binance from "node-binance-api";
-const binance = new Binance()
+
 const Home = () => {
 const history=useHistory();
 

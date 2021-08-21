@@ -11,11 +11,11 @@ import ABI from "./ABI.json";
 import { func } from 'prop-types';
 const common = require('ethereumjs-common');
 var Tx=require("ethereumjs-tx").Transaction;
-const binance = new Binance()
+
 
 // let Tx=Txc.Transaction;
 function Detail() {
-
+const binance = new Binance();
     const {detailtype}=useParams();
 
 console.log(detailtype);
