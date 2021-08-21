@@ -7,8 +7,8 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg navbar-light  ">
   <div className="container-fluid">
     <NavLink className="navbar-brand"  exact to="/" style={{color:"white"}}>Block Chain</NavLink>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
+    <button className="navbar-toggler" style={{color:"white"}} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon" style={{color:"white"}} ></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav  mb-2 mb-lg-0 ml-auto">

@@ -5,17 +5,25 @@ import "react-toastify/dist/ReactToastify.css";
 import Web3 from 'web3';
 import Txc  from 'ethereumjs-tx';
 import axios from "axios";
-import Binance from "node-binance-api";
+
+import Binance from 'binance-api-node';
+
 import supply from "./supply.json"
 import ABI from "./ABI.json";
 import { func } from 'prop-types';
 const common = require('ethereumjs-common');
 var Tx=require("ethereumjs-tx").Transaction;
+// var Binance= require("node-binance-api").default;
+
+
 
 
 // let Tx=Txc.Transaction;
+
+
 function Detail() {
-const binance = new Binance();
+
+
     const {detailtype}=useParams();
 
 console.log(detailtype);
@@ -170,7 +178,11 @@ if(balancevalue<totalvalue)
   return;
 }
 
-  let ticker = await binance.prices();
+// const binance =new Binance();
+const client = Binance()
+
+
+  let ticker = await client.prices({ symbol: 'BNBUSDT' });
   console.info(`Price of BNB: ${ticker.BNBUSDT}`);
 
   let price=ticker.BNBUSDT;
