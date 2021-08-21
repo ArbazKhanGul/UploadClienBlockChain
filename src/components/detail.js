@@ -178,7 +178,7 @@ if(balancevalue<totalvalue)
   return;
 }
 
-// const binance =new Binance();
+
 const client = Binance()
 
 
