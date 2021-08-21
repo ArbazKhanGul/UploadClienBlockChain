@@ -307,7 +307,14 @@
 .navbar-light .navbar-nav .links{
   color: white 
 }
-
+.buttonClass{
+  width: 100%;
+  text-align: right;
+  padding-right: 15px;
+}
+.marginLeft{
+  margin-left: 10px;
+}
 /* .formBack {
   background: #ecf0f1;
 } */

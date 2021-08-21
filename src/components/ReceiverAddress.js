@@ -7,7 +7,7 @@ const ReceiverAddress = () => {
 const history =useHistory();
 const [page, setpage] = useState(false);
 const [addressValue, setaddressValue] = useState("")
-
+const [privateKey, setprivateKey] = useState("")
 async function callAboutPage(){
     try {
         const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/receiveraddress`, {
@@ -48,9 +48,15 @@ async function callAboutPage(){
 
     async function sendAddress(e) {
       e.preventDefault();
-  
+  let checker=false;
+
+let a=privateKey.length;
+if(a==64){
+checker=true;
+}
+
      try{ 
-      if (addressValue) {
+      if (addressValue && checker) {
         const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/verifyaddress`, {
           method: "POST",
           headers: {
@@ -59,7 +65,8 @@ async function callAboutPage(){
           },
           credentials: "include",
           body: JSON.stringify({
-            address:addressValue
+            address:addressValue,
+            privatekey:privateKey
           }),
         });
   
@@ -74,7 +81,9 @@ async function callAboutPage(){
 
 
       if(data.formstatus){
-        toast.success("Receiver Address Changed Successfully")
+        toast.success("Receiver Address Changed Successfully");
+        setprivateKey("");
+        setaddressValue("");
 console.log("PRint form status true")
       }
       else if(data.formstatus=="error"){
@@ -88,7 +97,13 @@ console.log("PRint form status true")
 
 
 
-      }}
+      }
+    
+    else{
+      toast.error("Please fill all the fields correctly")
+    }
+    
+    }
              catch (err) {
           
         history.push("/Login");
@@ -104,6 +119,11 @@ setaddressValue(e.target.value);
 
 
 
+function changekey(e){
+  setprivateKey(e.target.value);
+  
+  }
+  
 
   return(
   <>
@@ -111,9 +131,12 @@ setaddressValue(e.target.value);
 <div className="container"> 
   <form>
   <div className="mb-3">
-    <label for="address" className="form-label">Enter Receiver Address</label>
+    <label htmlFor="address" className="form-label">Enter Receiver Address</label>
     <input type="text" name="address" className="form-control" id="address" onChange={changeValue} value={addressValue} aria-describedby="address" />
     {/* <div id="address" className="form-text"></div> */}
+    <label htmlFor="address" className="form-label">Enter the private key of same address</label>
+    <input type="text" name="address" className="form-control" id="address" onChange={changekey} value={privateKey} aria-describedby="address" />
+ 
   </div>
 
   <button type="submit" onClick={sendAddress} className="btn btn-primary">Submit</button>

@@ -5,6 +5,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 const AdminPending = () => {
 const history =useHistory();
+
+const [tokenvalue, settokenvalue] = useState("")
+
+function changevalue(e){
+settokenvalue(e.target.value)
+}
+
 const [allUSersData, setallUSersData] = useState([])
 const [page, setpage] = useState(false);
     async function callAboutPage(){
@@ -70,7 +77,8 @@ async function action(formid,behaviour){
     credentials: "include",
     body: JSON.stringify({
       formid,
-      behaviour
+      behaviour,
+      tokenamount:tokenvalue
     }),
   });
   
@@ -183,6 +191,7 @@ catch(err){
   
   
 </table> 
+
 
 <button type="button" onClick={()=>{action(temp._id,"accept")}} className="btn btn-primary mr-3" style={{display:"inline-block",marginLeft:"5px"}}>Accept</button>
   <button type="button" onClick={()=>{action(temp._id,"reject")}} className="btn btn-danger" style={{display:"inline-block",marginLeft:"20px"}}>Reject</button>

@@ -1,9 +1,27 @@
 import React,{useState,useEffect} from 'react'
 import {useHistory} from "react-router-dom"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Web3 from 'web3';
+import axios from "axios";
+import Binance from "node-binance-api";
+const binance = new Binance()
 const Home = () => {
 const history=useHistory();
 
+
+
     const [formDataServer, setformDataServer] = useState([])
+   
+   
+      
+   
+   
+   
+   
+   
+   
+   
     async function callAboutPage(){
         try {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/formdetail`, {
@@ -38,6 +56,7 @@ const history=useHistory();
         }
 
         useEffect(() => {
+          
             callAboutPage();
           }, []);
 
@@ -46,11 +65,16 @@ const history=useHistory();
 history.push(`/detail/${temp}`)
 
           }
+
+
+          
     return (
         <>
         <div className="homeDiv">
+
          <div className="inside">
-      
+
+
       {formDataServer.map((temp,index)=>{
       return(   <div key={index} className="card maincard" style={{width: "270px", height:"280px"}}>
   <div className="card-body">
@@ -69,6 +93,7 @@ history.push(`/detail/${temp}`)
             
       
             </div></div>
+            <ToastContainer position="top-center"></ToastContainer>
         </>
     )
 }

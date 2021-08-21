@@ -15,7 +15,7 @@ const Project = () => {
 const [hash, sethash] = useState("");
 
 
-
+const [totaltokenssend, settotaltokenssend] = useState("");
 
 
 const [numberInput, setnumberInput] = useState("");
@@ -38,9 +38,6 @@ web3=new Web3(window.ethereum);
   
     const tokenInst = new web3.eth.Contract(ABI, data.contractadress);
     const balance = await tokenInst.methods.balanceOf(`${accounts[0]}`).call()  
-  
-   
-
     let temp = web3.utils.fromWei(balance, "ether");
     
     // console.log("I am printing token vlaue"+temp);
@@ -118,7 +115,7 @@ try {
   }
 
 
-setreceiverAddress(data.receive);
+setreceiverAddress(data.receive.receiveraddress);
 
 } catch (err) {
     console.log(err)
@@ -153,7 +150,9 @@ twitter:"",
 medium:"",
 coinmarketcap:"",
 coingecko:"",
-hash:""
+hash:"",
+tokenprice:"",
+totaltokenssend:""
 });
 
 let name, value;
@@ -180,7 +179,7 @@ twitter,
 medium,
 coinmarketcap,
 coingecko,
-
+tokenprice,
 }=data;
 
 console.log(data)
@@ -203,6 +202,8 @@ console.log(data)
       medium &&
       coinmarketcap &&
       coingecko && hash
+      && tokenprice
+      && totaltokenssend
       ) 
       
       {
@@ -222,7 +223,9 @@ console.log(data)
               medium,
               coinmarketcap,
               coingecko,
-              hash
+              hash,
+              tokenprice,
+              totaltokenssend
             }),
           }
         );
@@ -389,8 +392,10 @@ let has=await web3.eth.sendTransaction(rawTransaction)
 toast.success("Tokens send successfully")
 console.log(has);
 sethash(has.transactionHash)
+settotaltokenssend(numberInput);
 setnumberInput("");
-console.log(hash)
+console.log("Printing has value"+hash)
+console.log("PRinting total token value"+totaltokenssend)
  }
  catch(error){
 toast.error("Error comming in sending tokens")
@@ -767,6 +772,22 @@ toast.error("Error comming in sending tokens")
               </div>
 
               <h3 className="typeOfData">Price Data</h3>
+
+
+
+              <div className="mb-3">
+                <label htmlFor="coinmarketcap" className="form-label">
+                  Enter the token price in dollars
+                </label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="coinmarketcap"
+                  name="tokenprice"
+                  value={data.tokenprice}
+                  onChange={handleinput}
+                />
+              </div>
 
               <div className="mb-3">
                 <label htmlFor="coinmarketcap" className="form-label">
