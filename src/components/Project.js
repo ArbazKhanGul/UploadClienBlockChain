@@ -131,6 +131,9 @@ setreceiverAddress(data.receive.receiveraddress);
   const [tokenAvailable, settokenAvailable] = useState("");
 const [page, setpage] = useState(false);
 const [checkmetamask, setcheckmetamask] = useState(false);
+const [tokensymbol, settokensymbol] = useState("")
+const [tokendecimal, settokendecimal] = useState("")
+const [tokenchain, settokenchain] = useState("")
 
 const [data, setdata] = useState({
   contractadress:"",
@@ -225,7 +228,10 @@ console.log(data)
               coingecko,
               hash,
               tokenprice,
-              totaltokenssend
+              totaltokenssend,
+              tokensymbol,
+              tokenchain,
+              tokendecimal
             }),
           }
         );
@@ -259,6 +265,9 @@ console.log(data)
          sethash("");
         settokenAvailable("");
         settokenName("");
+        settokenchain("");
+        settokendecimal("");
+        settokensymbol("");
         }
      
     } 
@@ -453,7 +462,11 @@ toast.error("Error comming in sending tokens")
 
       settokenName(dat.name);
       settokenAvailable(dat.tokens);
-      
+      settokensymbol(dat.symbol)
+      settokendecimal(dat.decimal)
+      settokenchain(dat.chain);
+
+
       setdata((prev) => {
         return {
           ...prev,
@@ -654,6 +667,92 @@ toast.error("Error comming in sending tokens")
                   of
                 </div>
               </div>
+
+
+
+
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Symbol
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokensymbol}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokensymbol"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+              
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Decimal Value
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokendecimal}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokendecimal"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Chain
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokenchain}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokenchain"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
               <button   onClick={getAccount} disabled={tokenAvailable?null:"disabled"}   type="button" className="btn btn-primary">

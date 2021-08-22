@@ -124,6 +124,26 @@ async function callAboutPage(){
       <td>{temp.coinmarketcap}</td> 
       <td>{temp.coingecko}</td> 
     </tr>
+
+    <thead className=" table-light " style={{text: "black !important",fontWeight:"bold"
+  }}>
+    <tr className="text-dark bold">
+  
+      <td>Token Symbol</td>
+      <td>Token Chain </td>
+      <td>Total tokens</td>
+      <td>Token Decimal</td> 
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <td>{temp.tokensymbol}</td>
+      <td>{temp.tokenchain}</td>
+      <td>{temp.tokensavailable}</td> 
+      <td>{temp.tokendecimal}</td> 
+    </tr>
+  </tbody>
+  
   </tbody>
   
   
