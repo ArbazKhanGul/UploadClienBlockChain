@@ -520,6 +520,132 @@ toast.error("Error comming in sending tokens")
                />
               </div>
 
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Name : 
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokenName}
+                  className="form-control"
+                  id="tokenname"
+                  aria-describedby="emailHelp"
+                  name="tokensname"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Available
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokenAvailable}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokensavailable"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Symbol
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokensymbol}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokensymbol"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+              
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Decimal Value
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokendecimal}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokendecimal"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+              <div className="mb-3">
+                <label htmlFor="token" className="form-label">
+                  Token Chain
+                </label>
+                <input
+                  type="text"
+                  readOnly
+                  value={tokenchain}
+                  className="form-control"
+                  id="token"
+                  aria-describedby="emailHelp"
+                  name="tokenchain"
+                  
+                />
+                <div id="emailHelp" className="form-text">
+                  Please soecify the industry/field that the project is a part
+                  of
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <div className="mb-3">
                 <label htmlFor="RequesterName" className="form-label">
                   Requester Name
@@ -648,94 +774,7 @@ toast.error("Error comming in sending tokens")
                 ></textarea>
               </div>
 
-              <div className="mb-3">
-                <label htmlFor="token" className="form-label">
-                  Token Name : {tokenName}
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={tokenAvailable}
-                  className="form-control"
-                  id="token"
-                  aria-describedby="emailHelp"
-                  name="tokensavailable"
-                  
-                />
-                <div id="emailHelp" className="form-text">
-                  Please soecify the industry/field that the project is a part
-                  of
-                </div>
-              </div>
-
-
-
-
-
-              <div className="mb-3">
-                <label htmlFor="token" className="form-label">
-                  Token Symbol
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={tokensymbol}
-                  className="form-control"
-                  id="token"
-                  aria-describedby="emailHelp"
-                  name="tokensymbol"
-                  
-                />
-                <div id="emailHelp" className="form-text">
-                  Please soecify the industry/field that the project is a part
-                  of
-                </div>
-              </div>
-
-
-              
-              <div className="mb-3">
-                <label htmlFor="token" className="form-label">
-                  Token Decimal Value
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={tokendecimal}
-                  className="form-control"
-                  id="token"
-                  aria-describedby="emailHelp"
-                  name="tokendecimal"
-                  
-                />
-                <div id="emailHelp" className="form-text">
-                  Please soecify the industry/field that the project is a part
-                  of
-                </div>
-              </div>
-
-
-
-              <div className="mb-3">
-                <label htmlFor="token" className="form-label">
-                  Token Chain
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={tokenchain}
-                  className="form-control"
-                  id="token"
-                  aria-describedby="emailHelp"
-                  name="tokenchain"
-                  
-                />
-                <div id="emailHelp" className="form-text">
-                  Please soecify the industry/field that the project is a part
-                  of
-                </div>
-              </div>
-
+             
 
 
 
