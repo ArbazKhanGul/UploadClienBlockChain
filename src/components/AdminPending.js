@@ -177,7 +177,7 @@ catch(err){
     <tr className="text-dark bold">
   
       <td>Twitter</td>
-      <td>Medium </td>
+      <td>Token Price </td>
       <td>Coin Market Cap Ticker</td>
       <td>Token Name</td> 
     </tr>
@@ -185,7 +185,7 @@ catch(err){
   <tbody>
     <tr>
     <td>{temp.twitter}</td>
-      <td>{temp.medium}</td>
+      <td>{temp.tokenprice}</td>
       <td>{temp.coinmarketcap}</td> 
       <td>{temp.tokenName}</td> 
     </tr>
