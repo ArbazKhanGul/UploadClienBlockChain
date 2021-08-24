@@ -179,7 +179,7 @@ catch(err){
       <td>Twitter</td>
       <td>Medium </td>
       <td>Coin Market Cap Ticker</td>
-      <td>Coin Gecko Ticker</td> 
+      <td>Token Name</td> 
     </tr>
   </thead>
   <tbody>
@@ -187,7 +187,7 @@ catch(err){
     <td>{temp.twitter}</td>
       <td>{temp.medium}</td>
       <td>{temp.coinmarketcap}</td> 
-      <td>{temp.coingecko}</td> 
+      <td>{temp.tokenName}</td> 
     </tr>
   </tbody>
   
@@ -211,6 +211,50 @@ catch(err){
   </tbody>
   
   
+  <thead className=" table-light " style={{text: "black !important",fontWeight:"bold"
+  }}>
+    <tr className="text-dark bold">
+      <td width="25%" >Can you briefly introduce yourself as well as {temp.tokenName} NFT ?
+</td>
+      <td width="25%" >Is {temp.tokenName} NFT a safe and reliable platform for investors? What value does {temp.tokenName} NFT bring to investors and the blockchain community?
+</td>
+      <td width="25%" > Who are {temp.tokenName} NFT strategic investors? And what is {temp.tokenName} NFT roadmap to 2021? What is your ultimate goal for this year?</td>
+      <td width="25%" > What are the competitive advantages of your project? What advantages do you have that other competitors dont have? What would be your project secure most similar contender in the market today in terms of scalability, security, features & adaptability?</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <td width="25%"> {temp.q1}</td>
+      <td width="25%" >{temp.q2}</td>
+      <td width="25%" >{temp.q3}</td> 
+      <td width="25%" >{temp.q4}</td> 
+    </tr>
+  </tbody>
+
+
+
+  <thead className=" table-light " style={{text: "black !important",fontWeight:"bold"
+  }}>
+    <tr className="text-dark bold">
+      <td width="25%" >What are the highlights of your project and products that you believe will help you succeed? How revenue is generated to sustain the project, and what plans do you have to attract more users in the future?
+</td>
+      <td width="25%" >What is the token's role in the ecosystem? Where can people buy right now? what will it do? Is your platform suitable for Crypto beginners? Or is it limited to professional users only?</td>
+      <td width="25%" >  Almost 80% investors have just focused on price of token in short term instead of understanding the real value of the project. Can you tell us on motivations and benefits for investors to hold your token in long term?
+</td>
+      <td width="25%" >
+      Users often care less about technology, but rather the value of the token. How do you manage to strike a balance between developing the technology and also improving the value of the token?
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <td width="25%"> {temp.q5}</td>
+      <td width="25%" >{temp.q6}</td>
+      <td width="25%" >{temp.q7}</td> 
+      <td width="25%" >{temp.q8}</td> 
+    </tr>
+  </tbody>
+
 
 
 </table> 

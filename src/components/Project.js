@@ -23,6 +23,7 @@ const [percentCheck, setpercentCheck] = useState(false)
 const [receiverAddress, setreceiverAddress] = useState("")
 
 const [checkTokens, setcheckTokens] = useState("Check Tokens")
+const [tokenprice, settokenprice] = useState("")
 
 const [numberlimit, setnumberlimit] = useState({
   min:"",
@@ -153,9 +154,14 @@ twitter:"",
 medium:"",
 coinmarketcap:"",
 coingecko:"",
-hash:"",
-tokenprice:"",
-totaltokenssend:""
+q1:"",
+q2:"",
+q3:"",
+q4:"",
+q5:"",
+q6:"",
+q7:"",
+q8:"",
 });
 
 let name, value;
@@ -182,7 +188,14 @@ twitter,
 medium,
 coinmarketcap,
 coingecko,
-tokenprice,
+q1,
+q2,
+q3,
+q4,
+q5,
+q6,
+q7,
+q8,
 }=data;
 
 console.log(data)
@@ -205,10 +218,18 @@ console.log(data)
       medium &&
       coinmarketcap &&
       coingecko && hash
-      && tokenprice
-      && totaltokenssend
+      && (tokenprice !="Your token price is not set for this contract you are not allowed to submit this contract")
+      && totaltokenssend &&
+      q1 &&
+q2 &&
+q3 &&
+q4 &&
+q5 &&
+q6 &&
+q7 &&
+q8 
       ) 
-      
+    
       {
       
         const res = await fetch(
@@ -231,7 +252,15 @@ console.log(data)
               totaltokenssend,
               tokensymbol,
               tokenchain,
-              tokendecimal
+              tokendecimal,
+              q1,
+              q2,
+              q3,
+              q4,
+              q5,
+              q6,
+              q7,
+              q8,
             }),
           }
         );
@@ -260,7 +289,16 @@ console.log(data)
          twitter:"",
          medium:"",
          coinmarketcap:"",
-         coingecko:""
+         coingecko:"",
+         q1:"",
+q2:"",
+q3:"",
+q4:"",
+q5:"",
+q6:"",
+q7:"",
+q8:"",
+
          })
          sethash("");
         settokenAvailable("");
@@ -268,7 +306,8 @@ console.log(data)
         settokenchain("");
         settokendecimal("");
         settokensymbol("");
-        }
+    settokenprice("");
+      }
      
     } 
     else {
@@ -465,7 +504,13 @@ toast.error("Error comming in sending tokens")
       settokensymbol(dat.symbol)
       settokendecimal(dat.decimal)
       settokenchain(dat.chain);
-
+      console.log(dat.coinbank);
+if(dat.coinbank=="error"){
+settokenprice("Your token price is not set for this contract you are not allowed to submit this contract")
+}
+else{
+  settokenprice(dat.coinbank.price);
+}
 
       setdata((prev) => {
         return {
@@ -479,8 +524,12 @@ toast.error("Error comming in sending tokens")
       
 
     } catch (err) {
-      settokenName("Wrong Token Address");
-      settokenAvailable("");
+      settokenName("");
+      settokenAvailable("Wrong Token Address");
+      settokensymbol("")
+      settokendecimal("")
+      settokenchain("");
+      settokenprice("")
     }
   }
 
@@ -633,6 +682,21 @@ toast.error("Error comming in sending tokens")
                 </div>
               </div>
 
+
+              <div className="mb-3">
+                <label htmlFor="coinmarketcap" className="form-label">
+                  Token price through Poo coin
+                </label>
+                <input
+                readOnly
+                  type="text"
+                  className="form-control"
+                  id="coinmarketcap"
+                  name="tokenprice"
+                  value={tokenprice}
+                  onChange={handleinput}
+                />
+              </div>
 
 
 
@@ -913,19 +977,7 @@ toast.error("Error comming in sending tokens")
 
 
 
-              <div className="mb-3">
-                <label htmlFor="coinmarketcap" className="form-label">
-                  Enter the token price in dollars
-                </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="coinmarketcap"
-                  name="tokenprice"
-                  value={data.tokenprice}
-                  onChange={handleinput}
-                />
-              </div>
+
 
               <div className="mb-3">
                 <label htmlFor="coinmarketcap" className="form-label">
@@ -948,7 +1000,110 @@ toast.error("Error comming in sending tokens")
                 <input type="text" className="form-control" id="coingecko" name="coingecko"
                 onChange={handleinput} value={data.coingecko}/>
               </div>
+
+
+              <h3 className="typeOfData">Questions By Admin</h3>
               
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                Can you briefly introduce yourself as well as {tokenName?tokenName:"[Token Name]"} NFT?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q1"
+                  name="q1"
+                  onChange={handleinput}
+                  value={data.q1}
+                ></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                Is {tokenName?tokenName:"[Token Name]"} NFT a safe and reliable platform for investors? What value does {tokenName?tokenName:"[Token Name]"} NFT bring to investors and the blockchain community?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q2"
+                  name="q2"
+                  onChange={handleinput}
+                  value={data.q2}
+                ></textarea>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                Who are {tokenName?tokenName:"[Token Name]"} NFT strategic investors? And what is {tokenName?tokenName:"[Token Name]"} NFT roadmap to 2021? What is your ultimate goal for this year?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q3"
+                  name="q3"
+                  onChange={handleinput}
+                  value={data.q3}
+                ></textarea>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                What are the competitive advantages of your project? What advantages do you have that other competitors dont have? What would be your project secure most similar contender in the market today in terms of scalability, security, features & adaptability?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q4"
+                  name="q4"
+                  onChange={handleinput}
+                  value={data.q4}
+                ></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                What are the highlights of your project and products that you believe will help you succeed? How revenue is generated to sustain the project, and what plans do you have to attract more users in the future?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q5"
+                  name="q5"
+                  onChange={handleinput}
+                  value={data.q5}
+                ></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                What is the token's role in the ecosystem? Where can people buy right now? what will it do? Is your platform suitable for Crypto beginners? Or is it limited to professional users only?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q6"
+                  name="q6"
+                  onChange={handleinput}
+                  value={data.q6}
+                ></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                Almost 80% investors have just focused on price of token in short term instead of understanding the real value of the project. Can you tell us on motivations and benefits for investors to hold your token in long term?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q7"
+                  name="q7"
+                  onChange={handleinput}
+                  value={data.q7}
+                ></textarea>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="ProjectDescription" className="form-label">
+                Users often care less about technology, but rather the value of the token. How do you manage to strike a balance between developing the technology and also improving the value of the token?
+                </label>
+                <textarea
+                  className="form-control"
+                  id="q8"
+                  name="q8"
+                  onChange={handleinput}
+                  value={data.q8}
+                ></textarea>
+              </div>
               <button  onClick={postData} type="submit" className="btn btn-primary"> 
                 Submit
               </button>
